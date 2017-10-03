@@ -4,6 +4,10 @@ public class Client {
     int id;
     String fullName;
 
+    public Client() {
+
+    }
+
     public Client(int id, String fullName) {
         this.id = id;
         this.fullName = fullName;
