@@ -8,6 +8,14 @@ public class Client {
 
     }
 
+    public Client(int id) {
+        this.id = id;
+    }
+
+    public Client(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Client(int id, String fullName) {
         this.id = id;
         this.fullName = fullName;
