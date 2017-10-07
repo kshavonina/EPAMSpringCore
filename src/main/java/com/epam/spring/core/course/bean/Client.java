@@ -1,20 +1,8 @@
 package com.epam.spring.core.course.bean;
 
 public class Client {
-    int id;
-    String fullName;
-
-    public Client() {
-
-    }
-
-    public Client(int id) {
-        this.id = id;
-    }
-
-    public Client(String fullName) {
-        this.fullName = fullName;
-    }
+    private int id;
+    private String fullName;
 
     public Client(int id, String fullName) {
         this.id = id;

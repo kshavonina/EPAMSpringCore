@@ -4,14 +4,10 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class Event {
-    int id = (int) (Math.random() * 99) + 1;
-    String msg;
-    Date date;
-    DateFormat df;
-
-    public Event() {
-
-    }
+    private int id = (int) (Math.random() * 99) + 1;
+    private String msg;
+    private Date date;
+    private DateFormat df;
 
     public Event(Date date, DateFormat df) {
         this.date = date;

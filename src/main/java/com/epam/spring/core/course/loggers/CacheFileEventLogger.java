@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CacheFileEventLogger extends FileEventLogger {
-    int cacheSize;
-    List<Event> cache;
+    private int cacheSize;
+    private List<Event> cache;
 
     public CacheFileEventLogger(String fileName, int cacheSize) {
         super(fileName);
