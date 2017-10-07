@@ -31,8 +31,7 @@
     </bean>
 
     <bean id="cacheFileEventLogger" class="com.epam.spring.core.course.loggers.CacheFileEventLogger"
-          destroy-method="destroy" init-method="init">
-        <constructor-arg value="target/events_log.txt"/>
+          destroy-method="destroy" parent="fileEventLogger">
         <constructor-arg value="5"/>
     </bean>
 
