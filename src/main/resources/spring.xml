@@ -10,13 +10,20 @@
         <constructor-arg type="java.lang.String" value="John Smith"/>
     </bean>
 
-    <bean id="eventLogger" class="com.epam.spring.core.course.ConsoleEventLogger">
-
-    </bean>
+    <bean id="eventLogger" class="com.epam.spring.core.course.ConsoleEventLogger"/>
 
     <bean id="app" class="com.epam.spring.core.course.App">
         <constructor-arg ref="client"/>
         <constructor-arg ref="eventLogger"/>
     </bean>
+
+    <bean id="event" class="com.epam.spring.core.course.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
 
 </beans>
