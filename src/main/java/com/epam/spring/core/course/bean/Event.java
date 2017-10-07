@@ -1,4 +1,4 @@
-package com.epam.spring.core.course;
+package com.epam.spring.core.course.bean;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -22,12 +22,16 @@ public class Event {
         this.msg = msg;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
                 ", msg='" + msg + '\'' +
-                ", date=" + date +
+                ", date=" + df.format(date) +
                 '}';
     }
 }

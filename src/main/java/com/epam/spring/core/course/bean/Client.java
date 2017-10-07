@@ -1,4 +1,4 @@
-package com.epam.spring.core.course;
+package com.epam.spring.core.course.bean;
 
 public class Client {
     int id;
