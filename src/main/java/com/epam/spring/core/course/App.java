@@ -25,17 +25,15 @@ public class App {
     }
 
     public static void main(String[] args) {
-        App a = new App(new Client(8));
-
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) ctx.getBean("app");
 
-        app.logEvent("Some event 1");
-        app.logEvent("Some event 2");
+        //app.logEvent("Some event 1");
+        //app.logEvent("Some event 2");
     }
 
-    void logEvent(String msg) {
-        String message = msg.replaceAll(String.valueOf(client.getId()), client.getFullName());
-        this.eventLogger.logEvent(message);
+    void logEvent(Event event) {
+        String message = event.msg.replaceAll(String.valueOf(client.getId()), client.getFullName());
+        this.eventLogger.logEvent(event);
     }
 }
