@@ -2,18 +2,22 @@ package com.epam.spring.core.course;
 
 import com.epam.spring.core.course.bean.Client;
 import com.epam.spring.core.course.bean.Event;
-import com.epam.spring.core.course.loggers.ConsoleEventLogger;
+import com.epam.spring.core.course.bean.EventType;
 import com.epam.spring.core.course.loggers.EventLogger;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Map;
+
 public class App {
     private Client client;
-    private EventLogger eventLogger;
+    private EventLogger defaultLogger;
+    private Map<EventType, EventLogger> loggers;
 
-    public App(Client client, ConsoleEventLogger eventLogger) {
+    public App(Client client, EventLogger defaultLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
-        this.eventLogger = eventLogger;
+        this.defaultLogger = defaultLogger;
+        this.loggers = loggers;
     }
 
     public static void main(String[] args) {
@@ -21,17 +25,27 @@ public class App {
         App app = (App) ctx.getBean("app");
 
         Event event = ctx.getBean(Event.class);
-        app.logEvent(event, "Some event 1");
+        app.logEvent(EventType.INFO, event, "Some event 1");
 
         event = ctx.getBean(Event.class);
-        app.logEvent(event, "Some event 2");
+        app.logEvent(EventType.ERROR, event, "Some event 2");
+
+        event = ctx.getBean(Event.class);
+        app.logEvent(null, event, "Some event 3");
 
         ctx.close();
     }
 
-    void logEvent(Event event, String msg) {
+    void logEvent(EventType eventType, Event event, String msg) {
         String message = msg.replaceAll(String.valueOf(client.getId()), client.getFullName());
-        event.setMsg(msg);
-        this.eventLogger.logEvent(event);
+        event.setMsg(message);
+
+        EventLogger logger = loggers.get(eventType);
+
+        if (logger == null) {
+            logger = defaultLogger;
+        }
+
+        logger.logEvent(event);
     }
 }
