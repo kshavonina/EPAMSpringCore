@@ -1,9 +1,23 @@
 package com.epam.spring.core.course.bean;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Client {
+    @Value("${id}")
     private int id;
+
+    @Value("${name}")
     private String fullName;
+
+    @Value("${greeting}")
     private String greeting;
+
+    public Client() {
+
+    }
 
     public Client(int id, String fullName) {
         this.id = id;
