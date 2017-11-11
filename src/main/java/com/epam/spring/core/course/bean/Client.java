@@ -1,6 +1,5 @@
 package com.epam.spring.core.course.bean;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,8 @@ public class Client {
     @Value("${name}")
     private String fullName;
 
-    @Value("${greeting}")
+    //@Value("${greeting}")
+    @Value("#{systemEnvironment['USERNAME']}")
     private String greeting;
 
     public Client() {

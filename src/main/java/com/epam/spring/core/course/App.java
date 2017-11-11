@@ -8,6 +8,7 @@ import com.epam.spring.core.course.spring.AppConfig;
 import com.epam.spring.core.course.spring.LoggerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -23,7 +24,9 @@ public class App {
     @Autowired
     private Client client;
 
-    @Resource(name = "defaultLogger")
+    //@Resource(name = "defaultLogger")
+    @Value("#{T(com.epam.spring.core.course.bean.Event).isDay() ?" +
+            " fileEventLogger : consoleEventLogger}")
     private EventLogger defaultLogger;
 
     @Resource(name = "loggerMap")

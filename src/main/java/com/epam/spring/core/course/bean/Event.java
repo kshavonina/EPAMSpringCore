@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Component
@@ -45,5 +46,17 @@ public class Event {
                 ", msg='" + msg + '\'' +
                 ", date=" + df.format(date) +
                 '}';
+    }
+
+    public static boolean isDay() {
+        LocalTime currentTime = LocalTime.now();
+        int currentHour = currentTime.getHour();
+        System.out.println(currentHour);
+
+        return currentHour >= 8 && currentHour < 17;
+    }
+
+    public static void main(String[] args) {
+        isDay();
     }
 }
