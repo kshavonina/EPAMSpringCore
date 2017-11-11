@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 @Configuration
+//@EnableAspectJAutoProxy
 public class LoggerConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigIn() {

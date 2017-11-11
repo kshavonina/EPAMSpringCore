@@ -1,5 +1,6 @@
 package com.epam.spring.core.course;
 
+import com.epam.spring.core.course.aspects.StatisticsAspect;
 import com.epam.spring.core.course.bean.Client;
 import com.epam.spring.core.course.bean.Event;
 import com.epam.spring.core.course.bean.EventType;
@@ -17,6 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.swing.*;
 import java.util.Map;
 
 @Service
@@ -29,8 +31,21 @@ public class App {
             " fileEventLogger : consoleEventLogger}")
     private EventLogger defaultLogger;
 
+    public EventLogger getDefaultLogger() {
+        return defaultLogger;
+    }
+
     @Resource(name = "loggerMap")
     private Map<EventType, EventLogger> loggers;
+
+    @Autowired
+    private StatisticsAspect statisticsAspect;
+
+    @Value("#{'Hello user ' + "
+            + "(systemProperties['os.name'].contains('Windows') ? "
+            + "systemEnvironment['USERNAME'] : systemEnvironment['USER']) + "
+            + "'. Default logger is ' + app.getDefaultLogger().name}")
+    private String startupMessage;
 
     public App() {
 
@@ -50,6 +65,8 @@ public class App {
 
         App app = (App) ctx.getBean("app");
 
+        System.out.println(app.startupMessage);
+
         Client client = (Client) ctx.getBean(Client.class);
         System.out.println("Client says: " + client.getGreeting());
 
@@ -57,15 +74,23 @@ public class App {
         app.logEvent(EventType.INFO, event, "Some event for 1");
 
         event = ctx.getBean(Event.class);
+        app.logEvent(EventType.INFO, event, "One more event for 1");
+
+        event = ctx.getBean(Event.class);
+        app.logEvent(EventType.INFO, event, "And one more event for 1");
+
+        event = ctx.getBean(Event.class);
         app.logEvent(EventType.ERROR, event, "Some event for 2");
 
         event = ctx.getBean(Event.class);
         app.logEvent(null, event, "Some event for 3");
 
+        app.outputLoggingCounter();
+
         ctx.close();
     }
 
-    void logEvent(EventType eventType, Event event, String msg) {
+    private void logEvent(EventType eventType, Event event, String msg) {
         String message = msg.replaceAll(String.valueOf(client.getId()), client.getFullName());
         event.setMsg(message);
 
@@ -76,5 +101,15 @@ public class App {
         }
 
         logger.logEvent(event);
+    }
+
+    private void outputLoggingCounter() {
+        if (statisticsAspect != null) {
+            System.out.println("Loggers statistics. Number of calls: ");
+
+            for (Map.Entry<Class<?>, Integer> entry : statisticsAspect.getCounter().entrySet()) {
+                System.out.println("    " + entry.getKey().getSimpleName() + ": " + entry.getValue());
+            }
+        }
     }
 }
